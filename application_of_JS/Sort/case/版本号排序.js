@@ -1,3 +1,4 @@
+//应用于react中
 import React from 'react';
 class RefsDome extends React.Component {
     constructor(prop) {
