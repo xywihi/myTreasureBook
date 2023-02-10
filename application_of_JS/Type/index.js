@@ -47,3 +47,11 @@ console.log(toString.call(null));    // [object Null]
 
 // 此判断方法组严谨，只是写法繁琐。
 
+//4、constructor字面上的意思就是通过判断当前数据的构造函数来判断数据类型
+
+'123'.constructor == String //true
+(123).constructor == Number //true
+true.constructor == Boolean //true
+([]).constructor == Array //true
+({}).constructor == Object //true
+Symbol(1).constructor === Symbol //true
