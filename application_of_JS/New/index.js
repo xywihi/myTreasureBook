@@ -30,20 +30,26 @@ console.log(T.name) //undefined,此时以返回值为准
 
 //2、做了什么
 // ·创建一个新的对象obj
-// ·将对象与构造函数通过原型链接起来
-// ·将构造函数中的this绑定到新建的对象obj上
-// ·根据构造函数返回类型做判断，如果是原始指责被忽略，如果为对象，需正常处理
+// ·将对象的原型指向构造函数的prototype
+// ·将构造函数的this指向新对象obj，该对象实现了这个构造函数的方法
+// ·根据一些特定情况，返回对象
+    // ·如果构造函数没有返回值，或者返回值是原始值，则返回创建的obj
+    // ·如果构造函数返回的是一个对象，则返回该对象
+    
 
 //3、手写new操作符
 function myNew(Func,...args) {
+    if(typeof Func !== 'function'){
+        throw new Error('myNew function must accept a function')
+    }
     //1、创建一个对象
-    const obj={};
+    const obj=Object.create(Func.prototype) ;
     //1、新对象原型指向构造函数原型对象
     obj.__proto__=Func.prototype;
     //3、将构造函数的this指向新对象
     let result=Func.apply(obj,args)
     //4、根据返回值判断
-    return result instanceof Object ? result : obj
+    return result && result instanceof Object ? result : obj
 }
 
 function PersonTest(name,age) {
